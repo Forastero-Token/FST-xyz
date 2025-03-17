@@ -1,0 +1,118 @@
+# clarrinet.toml configuration for SIP-10 Fungible Token Contract
+
+[project]
+# This section defines the project settings.
+name = "Forastero Token"
+version = "1.0.0"
+contract-id = "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE"
+
+[general]
+# Contract description
+description = "SIP-10 Fungible Token (FST)"
+
+[deployment]
+# Deployment specific settings (e.g., initial supply, owner, etc.)
+contract-owner = "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE"
+initial-supply = 1000000000000000  # Define MAXSUPPLY here as a constant
+
+[constants]
+# Define constants used in the contract
+ERR_UNAUTHORIZED = "u401"
+ERR_NOT_OWNER = "u402"
+ERR_INVALID_PARAMETERS = "u403"
+ERR_NOT_ENOUGH_FUND = "u101"
+MAXSUPPLY = 1000000000000000
+
+[traits]
+# SIP-10 trait reference for Fungible Token standard
+sip-010-trait = "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.sip-010-trait"
+
+[metadata]
+# Metadata URI for token information
+token-uri = "https://pdakhjpwkuwtadzmpnjm.supabase.co/storage/v1/object/public/uri/LWWRtUGJ-forastero-token-8-decimals.json"
+
+[functions]
+# Define the functions implemented in the contract
+[functions.transfer]
+type = "public"
+params = [{ name = "amount", type = "uint" }, { name = "from", type = "principal" }, { name = "to", type = "principal" }, { name = "memo", type = "(optional (buff 34))" }]
+description = "Transfers tokens from one principal to another."
+
+[functions.set-token-uri]
+type = "public"
+params = [{ name = "value", type = "string-utf8" }]
+description = "Sets the token URI metadata."
+
+[functions.get-balance]
+type = "read-only"
+params = [{ name = "owner", type = "principal" }]
+description = "Gets the balance of a given owner."
+
+[functions.get-name]
+type = "read-only"
+params = []
+description = "Gets the name of the token."
+
+[functions.get-symbol]
+type = "read-only"
+params = []
+description = "Gets the symbol of the token."
+
+[functions.get-decimals]
+type = "read-only"
+params = []
+description = "Gets the number of decimals for the token."
+
+[functions.get-total-supply]
+type = "read-only"
+params = []
+description = "Gets the total supply of tokens."
+
+[functions.get-token-uri]
+type = "read-only"
+params = []
+description = "Gets the URI for the token metadata."
+
+[functions.transfer-ownership]
+type = "public"
+params = [{ name = "new-owner", type = "principal" }]
+description = "Transfers ownership of the contract."
+
+[functions.send-many]
+type = "public"
+params = [{ name = "recipients", type = "list 200 { to: principal, amount: uint, memo: (optional (buff 34)) }" }]
+description = "Send tokens to multiple recipients in a batch."
+
+[functions.send-stx]
+type = "private"
+params = [{ name = "recipient", type = "principal" }, { name = "amount", type = "uint" }]
+description = "Send STX to a specified recipient."
+
+[functions.mint]
+type = "private"
+params = []
+description = "Mints new tokens for the contract."
+
+[logs]
+# Logging configuration (optional)
+enabled = true
+log-level = "info"
+
+[errors]
+# Define error messages
+[errors.ERR_UNAUTHORIZED]
+message = "Unauthorized access."
+code = "u401"
+
+[errors.ERR_NOT_OWNER]
+message = "Only the contract owner can perform this action."
+code = "u402"
+
+[errors.ERR_INVALID_PARAMETERS]
+message = "The parameters provided are invalid."
+code = "u403"
+
+[errors.ERR_NOT_ENOUGH_FUND]
+message = "Insufficient funds."
+code = "u101"
+
