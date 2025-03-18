@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Box,
   Button,
@@ -9,7 +10,7 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import HiroWalletContext from "./HiroWalletProvider";
 import { formatStxAddress } from "@/lib/address-utils";
 
@@ -26,10 +27,23 @@ export const ConnectWalletButton = (buttonProps: ConnectWalletButtonProps) => {
     testnetAddress,
     disconnect,
   } = useContext(HiroWalletContext);
+  const [isClient, setIsClient] = useState(false); // Track if we're on the client
+
+  // Set client flag after component mounts
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Get the correct wallet address based on the network
   const currentWalletAddress =
-    process.env.NEXT_PUBLIC_STACKS_NETWORK === "testnet"
+    process.env.NEXT_PUBLIC_STACKS_NETWORK === "mainnet"
       ? testnetAddress
       : mainnetAddress;
+
+  // Only render wallet logic on the client side
+  if (!isClient) {
+    return null; // Return nothing or a loading state while waiting for hydration
+  }
 
   return isWalletConnected ? (
     <Menu>
@@ -56,3 +70,4 @@ export const ConnectWalletButton = (buttonProps: ConnectWalletButtonProps) => {
     </Button>
   );
 };
+

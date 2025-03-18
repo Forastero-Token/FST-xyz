@@ -2,6 +2,7 @@ import CampaignDetails from "@/components/CampaignDetails";
 import { promises as fs } from "fs";
 import path from "path";
 
+// Fetch data before rendering the page (this is handled directly inside the component)
 async function getData() {
   const campaignDir = path.join(process.cwd(), "public/campaign");
   const imageFiles = await fs.readdir(campaignDir);
@@ -13,8 +14,10 @@ async function getData() {
   return { images, markdownContent };
 }
 
-export default async function Home() {
+// The default export of the page component
+export default async function Page() {
   const { images, markdownContent } = await getData();
 
   return <CampaignDetails images={images} markdownContent={markdownContent} />;
 }
+

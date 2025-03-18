@@ -1,5 +1,3 @@
-"use client";
-
 import {
   createContext,
   FC,
@@ -37,38 +35,44 @@ export default HiroWalletContext;
 interface ProviderProps {
   children: ReactNode | ReactNode[];
 }
+
 export const HiroWalletProvider: FC<ProviderProps> = ({ children }) => {
-  const [mounted, setMounted] = useState(false);
-  const [isWalletConnected, setIsWalletConnected] = useState(
-    mounted && userSession.isUserSignedIn()
-  );
-  useEffect(() => {
-    setMounted(true);
-    setIsWalletConnected(mounted && userSession.isUserSignedIn());
-  }, [mounted]);
+  const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [isWalletOpen, setIsWalletOpen] = useState(false);
+
+  // Use useEffect to ensure this logic runs only on the client
+  useEffect(() => {
+    // Check if user is signed in on the client-side (window is available)
+    if (typeof window !== "undefined") {
+      setIsWalletConnected(userSession.isUserSignedIn());
+    }
+  }, []);
 
   const authenticate = useCallback(() => {
     setIsWalletOpen(true);
-    showConnect({
-      appDetails: {
-        name: "Hiro",
-        icon: `${window.location.origin}/logo512.png`,
-      },
-      redirectTo: "/",
-      onFinish: async () => {
-        setIsWalletOpen(false);
-        setIsWalletConnected(userSession.isUserSignedIn());
-      },
-      onCancel: () => {
-        setIsWalletOpen(false);
-      },
-      userSession,
-    });
+    if (typeof window !== "undefined") {
+      showConnect({
+        appDetails: {
+          name: "Hiro",
+          icon: `${window.location.origin}/logo512.png`,
+        },
+        redirectTo: "/",
+        onFinish: async () => {
+          setIsWalletOpen(false);
+          setIsWalletConnected(userSession.isUserSignedIn());
+        },
+        onCancel: () => {
+          setIsWalletOpen(false);
+        },
+        userSession,
+      });
+    }
   }, []);
 
   const disconnect = useCallback(() => {
-    userSession.signUserOut(window.location?.toString());
+    if (typeof window !== "undefined") {
+      userSession.signUserOut(window.location?.toString());
+    }
   }, []);
 
   const testnetAddress = isWalletConnected
@@ -103,3 +107,4 @@ export const HiroWalletProvider: FC<ProviderProps> = ({ children }) => {
     </HiroWalletContext.Provider>
   );
 };
+

@@ -1,31 +1,7 @@
 import useTransactionExecuter from "@/hooks/useTransactionExecuter";
-import {
-  getCancelTx,
-  getInitializeTx,
-  getWithdrawTx,
-} from "@/lib/campaign-utils";
-import {
-  isDevnetEnvironment,
-  isTestnetEnvironment,
-} from "@/lib/contract-utils";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Box,
-  Button,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  NumberInput,
-  NumberInputField,
-  Tooltip,
-} from "@chakra-ui/react";
+import { getInitializeTx } from "@/lib/campaign-utils";
+import { isDevnetEnvironment, isTestnetEnvironment } from "@/lib/contract-utils";
+import { Alert, AlertDescription, AlertTitle, Box, Button, Flex, NumberInput, NumberInputField, Spinner } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import HiroWalletContext from "./HiroWalletProvider";
 import { useDevnetWallet } from "@/lib/devnet-wallet-context";
@@ -33,14 +9,8 @@ import { getStacksNetworkString } from "@/lib/stacks-api";
 
 export default function CampaignAdminControls({
   campaignIsUninitialized,
-  campaignIsCancelled,
-  campaignIsExpired,
-  campaignIsWithdrawn,
 }: {
   campaignIsUninitialized: boolean;
-  campaignIsCancelled: boolean;
-  campaignIsExpired: boolean;
-  campaignIsWithdrawn: boolean;
 }) {
   const { mainnetAddress, testnetAddress } = useContext(HiroWalletContext);
   const { currentWallet: devnetWallet } = useDevnetWallet();
@@ -51,86 +21,74 @@ export default function CampaignAdminControls({
     : mainnetAddress;
 
   const [isInitializingCampaign, setIsInitializingCampaign] = useState(false);
-  const [isCancelConfirmationModalOpen, setIsCancelConfirmationModalOpen] =
-    useState(false);
-
+  const [goal, setGoal] = useState<string>("");
   const executeTx = useTransactionExecuter();
-  const [goal, setGoal] = useState("");
+
   const handleGoalChange = (value: string) => {
     setGoal(value);
   };
 
   const handleInitializeCampaign = async () => {
+    if (!goal || isNaN(Number(goal)) || Number(goal) <= 0) {
+      // If the goal is invalid (not a positive number), return early
+      alert("Please enter a valid positive number for the goal.");
+      return;
+    }
+
     const txOptions = getInitializeTx(
       getStacksNetworkString(),
       currentWalletAddress || "",
       Number(goal)
     );
-    await executeTx(
-      txOptions,
-      devnetWallet,
-      "Campaign was initialized",
-      "Campaign was not initialized"
-    );
-    setGoal("");
+
     setIsInitializingCampaign(true);
-  };
 
-  const handleCancel = async () => {
-    setIsCancelConfirmationModalOpen(false);
-    const txOptions = getCancelTx(
-      getStacksNetworkString(),
-      currentWalletAddress || ""
-    );
-    await executeTx(
-      txOptions,
-      devnetWallet,
-      "Campaign cancellation was requested",
-      "Campaign was not cancelled"
-    );
-  };
-
-  const handleWithdraw = async () => {
-    const txOptions = getWithdrawTx(
-      getStacksNetworkString(),
-      currentWalletAddress || ""
-    );
-    await executeTx(
-      txOptions,
-      devnetWallet,
-      "Withdraw requested",
-      "Withdraw not requested"
-    );
+    try {
+      await executeTx(
+        txOptions,
+        devnetWallet,
+        "Campaign was initialized",
+        "Campaign was not initialized"
+      );
+      setGoal(""); // Clear goal input
+    } catch (error) {
+      console.error("Transaction failed", error);
+      alert("There was an error initializing the campaign. Please try again.");
+    } finally {
+      setIsInitializingCampaign(false);
+    }
   };
 
   return (
     <>
       <Alert mb="4" colorScheme="gray">
         <Box>
-          <AlertTitle mb="2">This is your campaign.</AlertTitle>
+          <AlertTitle mb="2">Own your Forastero Token today!</AlertTitle>
           <AlertDescription>
             <Flex direction="column" gap="2">
               {campaignIsUninitialized ? (
                 isInitializingCampaign ? (
                   <Box>
-                    Initializing campaign, please wait for it to be confirmed
-                    on-chain...
+                    <Flex align="center" gap="2">
+                      <Spinner size="sm" />
+                      <Box>Your payment is being initialized. Please wait for it to be confirmed on-chain...</Box>
+                    </Flex>
                   </Box>
                 ) : (
                   <>
                     <Box mb="1">
-                      Do you want to start it now? It will be open for
-                      contributions and will run for 4,320 BTC blocks, or about
-                      30 days.
+                      Ready to purchase your Forastero Token now? 
+                      The pre-sale will remain open until all 4 million Forastero Tokens are sold out.
                     </Box>
                     <NumberInput
                       bg="white"
                       min={1}
                       value={goal}
                       onChange={handleGoalChange}
+                      isDisabled={isInitializingCampaign} // Disable input while initializing
                     >
                       <NumberInputField
-                        placeholder="Enter goal (USD)"
+                        placeholder="Enter your budget in USD (Goal)"
                         textAlign="center"
                         fontSize="lg"
                       />
@@ -138,87 +96,20 @@ export default function CampaignAdminControls({
                     <Button
                       colorScheme="green"
                       onClick={handleInitializeCampaign}
-                      isDisabled={!goal}
+                      isDisabled={!goal || isInitializingCampaign || isNaN(Number(goal)) || Number(goal) <= 0}
                     >
-                      Start campaign for ${Number(goal).toLocaleString()}
+                       Buy Forastero tokens  for ${Number(goal).toLocaleString()}
                     </Button>
                   </>
                 )
               ) : (
-                <Flex direction="column">
-                  {/* Cancelled campaign - cannot withdraw or cancel */}
-                  {campaignIsCancelled ? (
-                    <Box>
-                      You have cancelled this campaign. Contributions are
-                      eligible for a refund.
-                    </Box>
-                  ) : (
-                    // Uncancelled campaign - controls to withdraw or cancel
-                    <Flex direction="column" gap="2">
-                      {campaignIsExpired ? ( // Withdrawal controls are only displayed for expired campaigns
-                        <>
-                          {campaignIsWithdrawn ? (
-                            <Box>
-                              You have already withdrawn the funds. Good luck!
-                            </Box>
-                          ) : (
-                            <Button
-                              colorScheme="green"
-                              onClick={handleWithdraw}
-                            >
-                              Withdraw funds
-                            </Button>
-                          )}
-                        </>
-                      ) : null}
-                      <Tooltip label="If you cancel the campaign, all contributions will be refunded to the donors, and this campaign will no longer accept new donations.">
-                        <Button
-                          colorScheme="yellow"
-                          onClick={() => {
-                            setIsCancelConfirmationModalOpen(true);
-                          }}
-                        >
-                          Cancel campaign
-                        </Button>
-                      </Tooltip>
-                    </Flex>
-                  )}
-                </Flex>
+                <Box>Your Forastero order is already initialized.</Box>
               )}
             </Flex>
           </AlertDescription>
         </Box>
       </Alert>
-      <Modal
-        isOpen={isCancelConfirmationModalOpen}
-        onClose={() => {
-          setIsCancelConfirmationModalOpen(false);
-        }}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Cancel Campaign?</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            This campaign will be cancelled. All contributors will be eligible
-            for a refund, and you will not be able to collect the funds. This
-            campaign will not accept new donations.
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              onClick={() => {
-                setIsCancelConfirmationModalOpen(false);
-              }}
-              mr="3"
-            >
-              Nevermind
-            </Button>
-            <Button colorScheme="blue" onClick={handleCancel}>
-              Yes, End Campaign
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </>
   );
 }
+

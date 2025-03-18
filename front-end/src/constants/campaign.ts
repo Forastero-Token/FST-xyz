@@ -1,3 +1,3 @@
-export const CAMPAIGN_TITLE = "Cooking with Crypto";
+export const CAMPAIGN_TITLE = "Blockchain Meets Agriculture";
 export const CAMPAIGN_SUBTITLE =
-  "A Revolutionary Guide to Financial Freedom Through Food";
+  "Forastero Token (FST) is backed by a 1,000-hectare cocoa farm, strengthening its real world agricultural foundation.";

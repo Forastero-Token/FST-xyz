@@ -15,9 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fundraising Campaign",
-  description:
-    "A crypto fundraising campaign accepting donations in STX & sBTC.",
+  title: "Buy - Forastero",
+  description: "Forastero fundraising accepting purchase in STX.",
 };
 
 export default function RootLayout({
@@ -27,6 +26,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Set favicon here */}
+        <link
+          rel="icon"
+          href="/images/vite.svg"  // Path to the favicon image in the public folder
+          type="image/svg+xml"     // Type of the image
+        />
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
           <>
@@ -38,3 +47,4 @@ export default function RootLayout({
     </html>
   );
 }
+

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Box,
@@ -103,3 +103,4 @@ export const DevnetWalletButton = ({
     </Menu>
   );
 };
+

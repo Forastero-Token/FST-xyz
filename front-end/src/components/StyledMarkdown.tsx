@@ -1,7 +1,22 @@
+"use client";
+
 import { Box } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
+import { useEffect, useState } from "react";
 
 export default function StyledMarkdown({ children }: { children: string }) {
+  const [isClient, setIsClient] = useState(false);
+
+  // Only run the component on the client to avoid SSR issues
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Don't render anything until after client-side mount
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <Box
       sx={{
@@ -38,3 +53,4 @@ export default function StyledMarkdown({ children }: { children: string }) {
     </Box>
   );
 }
+

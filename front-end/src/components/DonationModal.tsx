@@ -98,7 +98,7 @@ export default function DonationModal({
     if (!amount || amount <= 0) {
       toast({
         title: "Invalid amount",
-        description: "Please enter a valid donation amount",
+        description: "Please enter a valid purchase amount",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -128,7 +128,7 @@ export default function DonationModal({
           title: "Thank you!",
           description: (
             <Flex direction="column" gap="4">
-              <Box>Processing donation of ${amount}.</Box>
+              <Box>Processing purchase of ${amount}.</Box>
               <Box fontSize="xs">
                 Transaction ID: <strong>{txid}</strong>
               </Box>
@@ -166,7 +166,7 @@ export default function DonationModal({
       console.error(e);
       toast({
         title: "Error",
-        description: "Failed to make contribution",
+        description: "Failed to make purchase",
         status: "error",
       });
     } finally {
@@ -179,7 +179,7 @@ export default function DonationModal({
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Make a Contribution</ModalHeader>
+        <ModalHeader>Make your payment</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb="8">
           <Flex direction="column" gap="3">
@@ -193,7 +193,7 @@ export default function DonationModal({
                 direction="column"
                 gap="4"
               >
-                <Box>Please connect a STX wallet to make a contribution.</Box>
+                <Box>Please connect a STX wallet to make a purchase.</Box>
                 {isDevnetEnvironment() ? (
                   <DevnetWalletButton
                     currentWallet={devnetWallet}
@@ -210,7 +210,7 @@ export default function DonationModal({
                   <Alert mb="4">
                     <Box>
                       <AlertTitle>
-                        Heads up: you&apos;ve contributed before. Thank you!
+                        Welcome back: you've purchased Forastero tokens before, Keep holding Forastero token.
                       </AlertTitle>
                       <AlertDescription>
                         <Box>
@@ -243,14 +243,14 @@ export default function DonationModal({
                         </Radio>
                       </div>
                       <div>
-                        <Radio value="sbtc" id="sbtc">
-                          sBTC
+                        <Radio value="stx" id="stx">
+                          STX
                         </Radio>
                       </div>
                     </RadioGroup>
 
                     <Text fontSize="lg" fontWeight="bold">
-                      Choose Contribution Amount
+                      Enter Purchase Amount
                     </Text>
 
                     <HStack spacing={4} justify="center" wrap="wrap">
@@ -293,7 +293,7 @@ export default function DonationModal({
                         }
                         isLoading={isLoading}
                       >
-                        Donate ${selectedAmount || customAmount || "0"}
+                        Confirm ${selectedAmount || customAmount || "0"}
                       </Button>
                       <Box mx="auto" fontSize="sm" fontWeight="bold">
                         (≈
@@ -301,7 +301,7 @@ export default function DonationModal({
                           ? `${usdToStx(
                               Number(selectedAmount || customAmount || "0"),
                               prices?.stx || 0
-                            ).toFixed(2)} STX`
+                            ).toFixed(4)} STX`
                           : `${usdToSbtc(
                               Number(selectedAmount || customAmount || "0"),
                               prices?.sbtc || 0
@@ -315,10 +315,14 @@ export default function DonationModal({
             )}
           </Flex>
         </ModalBody>
+
         <ModalFooter>
-          <Button onClick={onClose}>Close</Button>
+          <Button variant="outline" colorScheme="blue" mr={3} onClick={onClose}>
+            Cancel
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
   );
 }
+

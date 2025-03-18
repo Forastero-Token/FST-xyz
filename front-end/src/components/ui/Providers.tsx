@@ -13,7 +13,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
-        <ColorModeScript initialColorMode="light" />
         <HiroWalletProvider>
           <DevnetWalletProvider>{children}</DevnetWalletProvider>
         </HiroWalletProvider>
@@ -21,3 +20,4 @@ export function Providers({ children }: { children: React.ReactNode }) {
     </QueryClientProvider>
   );
 }
+

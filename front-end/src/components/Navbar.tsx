@@ -1,39 +1,41 @@
 "use client";
 
-import { Box, Container, Flex, Link } from "@chakra-ui/react";
+import { Box, Container, Flex, Link, Image } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { isDevnetEnvironment } from "@/lib/contract-utils";
 import { useDevnetWallet } from "@/lib/devnet-wallet-context";
 import { DevnetWalletButton } from "./DevnetWalletButton";
 import { ConnectWalletButton } from "./ConnectWallet";
 
 export const Navbar = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  // Set `isClient` to true after the component mounts on the client
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const { currentWallet, wallets, setCurrentWallet } = useDevnetWallet();
+
+  // Render nothing during SSR or before client is ready
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <Box as="nav" bg="white" boxShadow="sm">
       <Container maxW="container.xl">
         <Flex justify="space-between" h={16} align="center">
           <Flex align="center">
-            <Flex
-              bg="white"
-              borderRadius="md"
-              border="2px"
-              borderColor="gray.700"
-              letterSpacing="-.05em"
-              fontSize="xl"
-              fontWeight="bold"
-              w="52px"
-              h="52px"
-              justify="center"
-              align="center"
-              color="gray.900"
-              shrink="0"
-            >
-              /-/
-            </Flex>
+            <Image
+              src="/images/vite.svg"
+              alt="FST Logo"
+              width="40px"
+              height="40px"
+            />
             <Link href="/" textDecoration="none">
               <Box fontSize="lg" fontWeight="bold" color="gray.900" ml={4}>
-                Fundraising
+                FORASTERO
               </Box>
             </Link>
           </Flex>
@@ -53,3 +55,4 @@ export const Navbar = () => {
     </Box>
   );
 };
+

@@ -93,9 +93,13 @@ export default function CampaignDetails({
     ? (campaignInfo.usdValue / campaignInfo.goal) * 100
     : 0;
 
-  const blocksLeft = campaignInfo ? campaignInfo?.end - (currentBlock || 0) : 0;
-  const secondsLeft = blocksLeft * 600; // estimate each block is 10 minutes
-  const secondsLeftTimestamp = new Date(Date.now() - secondsLeft * 1000);
+ const blockTimeEstimate = 3000; // Default: 10 minutes per block
+const blockTime = campaignInfo?.averageBlockTime || blockTimeEstimate;
+
+const blocksLeft = campaignInfo ? campaignInfo?.end - (currentBlock ?? 0) : 0;
+const secondsLeft = blocksLeft * blockTime; // Use dynamic block time
+const secondsLeftTimestamp = new Date(Date.now() + secondsLeft * 1000); // Future timestamp
+
 
   const { data: previousDonation } = useExistingDonation(currentWalletAddress);
 
@@ -189,7 +193,7 @@ export default function CampaignDetails({
             <Box p={6} borderRadius="lg" borderWidth="1px">
               {campaignIsUninitialized ? (
                 <Flex direction="column" gap="4">
-                  This campaign hasn&apos;t started yet!
+                  This pre-sale hasn&apos;t started yet!
                 </Flex>
               ) : null}
 
@@ -209,58 +213,55 @@ export default function CampaignDetails({
                         of ${campaignInfo?.goal?.toLocaleString()} goal
                       </StatHelpText>
                     </Stat>
-                    <Stat>
-                      <StatLabel>Contributions</StatLabel>
-                      <StatNumber>{campaignInfo?.donationCount}</StatNumber>
-                      <StatHelpText>
-                        {campaignIsExpired ? (
-                          <Flex direction="column">
-                            <Box>
-                              Campaign expired
-                              <Tooltip
-                                label={
-                                  <Flex direction="column" gap="1">
-                                    <Box>
-                                      Expired at: Block #{campaignInfo?.end}
-                                    </Box>
-                                    <Box>Current: Block #{currentBlock}</Box>
-                                  </Flex>
-                                }
-                              >
-                                <InfoIcon ml="1.5" mt="-3px" />
-                              </Tooltip>
-                            </Box>
-                          </Flex>
-                        ) : (
-                          <Flex direction="column">
-                            <Box>
-                              {blocksLeft.toLocaleString()} BTC blocks left
-                              <Tooltip
-                                label={
-                                  <Flex direction="column" gap="1">
-                                    <Box>
-                                      Started: Block #{campaignInfo?.start}
-                                    </Box>
-                                    <Box>Ends: Block #{campaignInfo?.end}</Box>
-                                    <Box>Current: Block #{currentBlock}</Box>
-                                  </Flex>
-                                }
-                              >
-                                <InfoIcon ml="1.5" mt="-3px" />
-                              </Tooltip>
-                            </Box>
-                            <Box>
-                              (About{" "}
-                              {format(secondsLeftTimestamp)?.replace(
-                                " ago",
-                                ""
-                              )}
-                              )
-                            </Box>
-                          </Flex>
-                        )}
-                      </StatHelpText>
-                    </Stat>
+                   <Stat>
+  <StatLabel>Transactions</StatLabel>
+  <StatNumber>{campaignInfo?.donationCount}</StatNumber>
+  <StatHelpText>
+    {campaignIsExpired ? (
+      <Flex direction="column">
+        <Box>
+          Campaign expired
+          <Tooltip
+            label={
+              <Flex direction="column" gap="1">
+                <Box>
+                  Expired at: Block #{campaignInfo?.end}
+                </Box>
+                <Box>Current: Block #{currentBlock}</Box>
+              </Flex>
+            }
+          >
+            <InfoIcon ml="1.5" mt="-3px" />
+          </Tooltip>
+        </Box>
+      </Flex>
+    ) : (
+      <Flex direction="column">
+        <Box>
+          {blocksLeft.toLocaleString()} BTC blocks left
+          <Tooltip
+            label={
+              <Flex direction="column" gap="1">
+                <Box>
+                  Started: Block #{campaignInfo?.start}
+                </Box>
+                <Box>Ends: Block #{campaignInfo?.end}</Box>
+                <Box>Current: Block #{currentBlock}</Box>
+              </Flex>
+            }
+          >
+            <InfoIcon ml="1.5" mt="-3px" />
+          </Tooltip>
+        </Box>
+        <Box>
+          (About{" "}
+          {format(secondsLeftTimestamp)?.replace(" ago", "")})
+        </Box>
+      </Flex>
+    )}
+  </StatHelpText>
+</Stat>
+
                   </SimpleGrid>
 
                   <Box>
@@ -285,7 +286,7 @@ export default function CampaignDetails({
                         <Alert mb="4">
                           <Box>
                             <AlertTitle>
-                              You contributed to this fundraiser.
+                              You have successfully purchased Forastero tokens.
                             </AlertTitle>
                             <AlertDescription>
                               <Box>
@@ -303,7 +304,7 @@ export default function CampaignDetails({
                             </AlertDescription>
                             <Box mt="4">
                               {!campaignIsCancelled ? (
-                                <Box>Thanks for your contribution!</Box>
+                                <Box>Thanks for your purchase!</Box>
                               ) : (
                                 <Button
                                   colorScheme="green"
@@ -327,19 +328,15 @@ export default function CampaignDetails({
                           setIsDonationModalOpen(true);
                         }}
                       >
-                        Contribute Now
+                        Purchase Now
                       </Button>
                       <Box fontSize="xs">
                         <Box mb="2">
-                          <strong>Flexible funding</strong>: Creator keeps
-                          whatever money they raise, even if they don&apos;t hit
-                          their target. No refunds to backers if the campaign
-                          falls short.
-                        </Box>
-                        <Box>
-                          The creator can always choose to cancel this
-                          fundraiser and provide refunds.
-                        </Box>
+                          <strong>Flexible funding</strong>: Funds raised during the pre-sale will be dedicated to advancing the cocoa farming project, including infrastructure improvements, technology adoption, and sustainable practices as outlined in our whitepaper.
+                      </Box>
+                      <Box>
+                        Buyers should ensure accurate payment amounts for bulk transfers based on the total paid. Please note, Forastero is pegged at 2.5 STX per token, and the amount paid will be calculated accordingly.
+                      </Box>
                       </Box>
                     </Flex>
                   )}
@@ -348,12 +345,10 @@ export default function CampaignDetails({
                 <Box>
                   <Alert status="warning">
                     <Box>
-                      <AlertTitle>Campaign Data Unavailable</AlertTitle>
-                      <AlertDescription>
-                        Unable to retrieve campaign data from the blockchain.
-                        This could be due to network issues or the campaign may
-                        no longer exist.
-                      </AlertDescription>
+                      <AlertTitle>Pre-sale Data Unavailable</AlertTitle>
+                    <AlertDescription>
+                      Unable to retrieve pre-sale data from the blockchain. This could be due to network issues or the campaign may no longer exist.
+                    </AlertDescription>
                     </Box>
                   </Alert>
                 </Box>

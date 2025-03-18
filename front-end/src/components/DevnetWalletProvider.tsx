@@ -22,3 +22,4 @@ export function DevnetWalletProvider({ children }: DevnetWalletProviderProps) {
     </DevnetWalletContext.Provider>
   );
 }
+

@@ -1,11 +1,28 @@
-.page {
+/* Default and Dark Mode Color Scheme */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
   --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
+}
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #1a1a1a;
+  }
+}
+
+/* Page Layout */
+.page {
   display: grid;
   grid-template-rows: 20px 1fr 20px;
   align-items: center;
@@ -16,17 +33,7 @@
   font-family: var(--font-geist-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
-}
-
+/* Main Content Layout */
 .main {
   display: flex;
   flex-direction: column;
@@ -56,6 +63,7 @@
   font-weight: 600;
 }
 
+/* Call-to-Action Button Styles */
 .ctas {
   display: flex;
   gap: 16px;
@@ -66,12 +74,8 @@
   border-radius: 128px;
   height: 48px;
   padding: 0 20px;
-  border: none;
   border: 1px solid transparent;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -92,6 +96,7 @@ a.secondary {
   min-width: 180px;
 }
 
+/* Footer Section */
 .footer {
   grid-row-start: 3;
   display: flex;
@@ -108,7 +113,7 @@ a.secondary {
   flex-shrink: 0;
 }
 
-/* Enable hover only on non-touch devices */
+/* Hover Effects */
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
     background: var(--button-primary-hover);
@@ -126,6 +131,7 @@ a.secondary {
   }
 }
 
+/* Responsive Design for Small Screens */
 @media (max-width: 600px) {
   .page {
     padding: 32px;
@@ -161,8 +167,10 @@ a.secondary {
   }
 }
 
+/* Logo Styling for Dark Mode */
 @media (prefers-color-scheme: dark) {
   .logo {
     filter: invert();
   }
 }
+
