@@ -7,11 +7,20 @@ import HiroWalletContext from "./HiroWalletProvider";
 import { useDevnetWallet } from "@/lib/devnet-wallet-context";
 import { getStacksNetworkString } from "@/lib/stacks-api";
 
-export default function CampaignAdminControls({
-  campaignIsUninitialized,
-}: {
+// Define prop type for the component
+interface CampaignAdminControlsProps {
   campaignIsUninitialized: boolean;
-}) {
+  campaignIsExpired: boolean;
+  campaignIsCancelled: boolean;
+  campaignIsWithdrawn: boolean;
+}
+
+const CampaignAdminControls: React.FC<CampaignAdminControlsProps> = ({
+  campaignIsUninitialized,
+  campaignIsExpired,
+  campaignIsCancelled,
+  campaignIsWithdrawn,
+}) => {
   const { mainnetAddress, testnetAddress } = useContext(HiroWalletContext);
   const { currentWallet: devnetWallet } = useDevnetWallet();
   const currentWalletAddress = isDevnetEnvironment()
@@ -98,7 +107,7 @@ export default function CampaignAdminControls({
                       onClick={handleInitializeCampaign}
                       isDisabled={!goal || isInitializingCampaign || isNaN(Number(goal)) || Number(goal) <= 0}
                     >
-                       Buy Forastero tokens  for ${Number(goal).toLocaleString()}
+                      Buy Forastero tokens for ${Number(goal).toLocaleString()}
                     </Button>
                   </>
                 )
@@ -106,10 +115,17 @@ export default function CampaignAdminControls({
                 <Box>Your Forastero order is already initialized.</Box>
               )}
             </Flex>
+            <Flex direction="column" gap="2" mt="4">
+              {campaignIsExpired && <Box>The campaign has expired.</Box>}
+              {campaignIsCancelled && <Box>The campaign has been cancelled.</Box>}
+              {campaignIsWithdrawn && <Box>The campaign has been withdrawn.</Box>}
+            </Flex>
           </AlertDescription>
         </Box>
       </Alert>
     </>
   );
-}
+};
+
+export default CampaignAdminControls;
 

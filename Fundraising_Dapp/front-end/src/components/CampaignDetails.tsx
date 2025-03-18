@@ -93,13 +93,9 @@ export default function CampaignDetails({
     ? (campaignInfo.usdValue / campaignInfo.goal) * 100
     : 0;
 
- const blockTimeEstimate = 3000; // Default: 10 minutes per block
-const blockTime = campaignInfo?.averageBlockTime || blockTimeEstimate;
-
-const blocksLeft = campaignInfo ? campaignInfo?.end - (currentBlock ?? 0) : 0;
-const secondsLeft = blocksLeft * blockTime; // Use dynamic block time
-const secondsLeftTimestamp = new Date(Date.now() + secondsLeft * 1000); // Future timestamp
-
+  const blocksLeft = campaignInfo ? campaignInfo?.end - (currentBlock || 0) : 0;
+  const secondsLeft = blocksLeft * 600; // estimate each block is 10 minutes
+  const secondsLeftTimestamp = new Date(Date.now() - secondsLeft * 1000);
 
   const { data: previousDonation } = useExistingDonation(currentWalletAddress);
 
@@ -193,7 +189,7 @@ const secondsLeftTimestamp = new Date(Date.now() + secondsLeft * 1000); // Futur
             <Box p={6} borderRadius="lg" borderWidth="1px">
               {campaignIsUninitialized ? (
                 <Flex direction="column" gap="4">
-                  This pre-sale hasn&apos;t started yet!
+                  This pre-sale has not started yet!
                 </Flex>
               ) : null}
 
@@ -213,55 +209,58 @@ const secondsLeftTimestamp = new Date(Date.now() + secondsLeft * 1000); // Futur
                         of ${campaignInfo?.goal?.toLocaleString()} goal
                       </StatHelpText>
                     </Stat>
-                   <Stat>
-  <StatLabel>Transactions</StatLabel>
-  <StatNumber>{campaignInfo?.donationCount}</StatNumber>
-  <StatHelpText>
-    {campaignIsExpired ? (
-      <Flex direction="column">
-        <Box>
-          Campaign expired
-          <Tooltip
-            label={
-              <Flex direction="column" gap="1">
-                <Box>
-                  Expired at: Block #{campaignInfo?.end}
-                </Box>
-                <Box>Current: Block #{currentBlock}</Box>
-              </Flex>
-            }
-          >
-            <InfoIcon ml="1.5" mt="-3px" />
-          </Tooltip>
-        </Box>
-      </Flex>
-    ) : (
-      <Flex direction="column">
-        <Box>
-          {blocksLeft.toLocaleString()} BTC blocks left
-          <Tooltip
-            label={
-              <Flex direction="column" gap="1">
-                <Box>
-                  Started: Block #{campaignInfo?.start}
-                </Box>
-                <Box>Ends: Block #{campaignInfo?.end}</Box>
-                <Box>Current: Block #{currentBlock}</Box>
-              </Flex>
-            }
-          >
-            <InfoIcon ml="1.5" mt="-3px" />
-          </Tooltip>
-        </Box>
-        <Box>
-          (About{" "}
-          {format(secondsLeftTimestamp)?.replace(" ago", "")})
-        </Box>
-      </Flex>
-    )}
-  </StatHelpText>
-</Stat>
-
+                    <Stat>
+                      <StatLabel>Contributions</StatLabel>
+                      <StatNumber>{campaignInfo?.donationCount}</StatNumber>
+                      <StatHelpText>
+                        {campaignIsExpired ? (
+                          <Flex direction="column">
+                            <Box>
+                              Campaign expired
+                              <Tooltip
+                                label={
+                                  <Flex direction="column" gap="1">
+                                    <Box>
+                                      Expired at: Block #{campaignInfo?.end}
+                                    </Box>
+                                    <Box>Current: Block #{currentBlock}</Box>
+                                  </Flex>
+                                }
+                              >
+                                <InfoIcon ml="1.5" mt="-3px" />
+                              </Tooltip>
+                            </Box>
+                          </Flex>
+                        ) : (
+                          <Flex direction="column">
+                            <Box>
+                              {blocksLeft.toLocaleString()} BTC blocks left
+                              <Tooltip
+                                label={
+                                  <Flex direction="column" gap="1">
+                                    <Box>
+                                      Started: Block #{campaignInfo?.start}
+                                    </Box>
+                                    <Box>Ends: Block #{campaignInfo?.end}</Box>
+                                    <Box>Current: Block #{currentBlock}</Box>
+                                  </Flex>
+                                }
+                              >
+                                <InfoIcon ml="1.5" mt="-3px" />
+                              </Tooltip>
+                            </Box>
+                            <Box>
+                              (About{" "}
+                              {format(secondsLeftTimestamp)?.replace(
+                                " ago",
+                                ""
+                              )}
+                              )
+                            </Box>
+                          </Flex>
+                        )}
+                      </StatHelpText>
+                    </Stat>
                   </SimpleGrid>
 
                   <Box>
@@ -276,10 +275,10 @@ const secondsLeftTimestamp = new Date(Date.now() + secondsLeft * 1000); // Futur
                   {campaignIsExpired || campaignIsCancelled ? (
                     <Flex direction="column" gap="2">
                       <Box>
-                        This fundraiser{" "}
+                        This pre-sale{" "}
                         {campaignIsCancelled ? "was cancelled" : "has ended"}.
                         {campaignIsCancelled
-                          ? " Contributors are eligible for a refund."
+                          ? " Buyers are eligible for a refund after purchase."
                           : null}
                       </Box>
                       {hasMadePreviousDonation ? (
@@ -335,7 +334,7 @@ const secondsLeftTimestamp = new Date(Date.now() + secondsLeft * 1000); // Futur
                           <strong>Flexible funding</strong>: Funds raised during the pre-sale will be dedicated to advancing the cocoa farming project, including infrastructure improvements, technology adoption, and sustainable practices as outlined in our whitepaper.
                       </Box>
                       <Box>
-                        Buyers should ensure accurate payment amounts for bulk transfers based on the total paid. Please note, Forastero is pegged at 2.5 STX per token, and the amount paid will be calculated accordingly.
+                        Forastero buyers should be aware and exercise patience after making payment, as coins are released in batches on a daily basis. Please note that Forastero is pegged at 2.5 STX per token, and the payment will be calculated based on this rate.
                       </Box>
                       </Box>
                     </Flex>
@@ -346,9 +345,9 @@ const secondsLeftTimestamp = new Date(Date.now() + secondsLeft * 1000); // Futur
                   <Alert status="warning">
                     <Box>
                       <AlertTitle>Pre-sale Data Unavailable</AlertTitle>
-                    <AlertDescription>
-                      Unable to retrieve pre-sale data from the blockchain. This could be due to network issues or the campaign may no longer exist.
-                    </AlertDescription>
+                      <AlertDescription>
+                         Unable to retrieve pre-sale data from the blockchain. This could be due to network issues or the pre-sale may no longer exist.
+                      </AlertDescription>
                     </Box>
                   </Alert>
                 </Box>
