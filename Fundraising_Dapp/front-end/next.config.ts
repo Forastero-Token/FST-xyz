@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/buy',
   env: {
     NEXT_PUBLIC_STACKS_NETWORK: process.env.NEXT_PUBLIC_STACKS_NETWORK,
     NEXT_PUBLIC_DEVNET_HOST: process.env.NEXT_PUBLIC_DEVNET_HOST,
