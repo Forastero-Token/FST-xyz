@@ -1,0 +1,39 @@
+name: Next.js Static Export
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./Fundraising_Dapp/front-end
+
+      - name: Build Next.js app
+        run: npm run build
+        working-directory: ./Fundraising_Dapp/front-end
+
+      - name: Export static site (out folder)
+        run: npm run export
+        working-directory: ./Fundraising_Dapp/front-end
+
+      - name: Upload `out` folder as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextjs-static-export
+          path: ./Fundraising_Dapp/front-end/out
