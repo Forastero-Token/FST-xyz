@@ -24,12 +24,8 @@ jobs:
         run: npm ci
         working-directory: ./Fundraising_Dapp/front-end
 
-      - name: Build Next.js app
+      - name: Build Next.js app (static export)
         run: npm run build
-        working-directory: ./Fundraising_Dapp/front-end
-
-      - name: Export static site (out folder)
-        run: npm run export
         working-directory: ./Fundraising_Dapp/front-end
 
       - name: Upload `out` folder as artifact
