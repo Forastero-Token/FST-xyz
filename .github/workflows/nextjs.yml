@@ -23,7 +23,7 @@ jobs:
         working-directory: ./Fundraising_Dapp/front-end
 
       - name: Build Next.js project
-        run: npm run build && npm run export
+        run: npm run build
         working-directory: ./Fundraising_Dapp/front-end
 
       - name: Push to build-output branch
@@ -32,8 +32,8 @@ jobs:
           git config --global user.email "actions@github.com"
           git checkout --orphan build-output
           git rm -rf .
-          cp -r ./Fundraising_Dapp/front-end/out/* ./
-          touch .nojekyll # Optional for GitHub Pages
+          cp -r ./Fundraising_Dapp/front-end/.next/* ./
+          touch .nojekyll # Optional
           git add .
           git commit -m "Automated deploy to build-output"
           git push --force origin build-output
