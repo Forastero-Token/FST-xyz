@@ -334,11 +334,10 @@ export default function CampaignDetails({
                           <strong>Scalable Solutions</strong>: Funds raised during the pre-sale will be dedicated to advancing the cocoa farming project, including infrastructure improvements, technology adoption, and sustainable practices as outlined in our whitepaper.
                       </Box>
                       <Box>
-                        <strong>Forastero</strong> buyers should be aware and exercise patience after making payment, as coins are released in batches on a daily basis. Please note that  <strong>Forastero</strong>  is pegged at <strong>2.5 STX</strong> per token, and the payment will be calculated based on this rate.
+                         <strong>Important:</strong>  A total of <strong>4,000,000 Forastero Tokens</strong> are available during this pre-sale. The pre-sale will conclude immediately once all tokens have been sold.
+                         
+                         <strong>Forastero</strong> buyers should be aware and exercise patience after making payment, as tokens are released in batches on a daily basis. Please note that  <strong>Forastero</strong>  is pegged at <strong>2.5 STX</strong> per token, and the payment will be calculated based on this rate.
                       </Box>
-                        <Box>
-                          <strong>Important:</strong>  A total of <strong>4,000,000 Forastero Tokens</strong> are available during this pre-sale. The pre-sale will conclude immediately once all tokens have been sold.
-                        </Box>
                       </Box>
                     </Flex>
                   )}
