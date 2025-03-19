@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export', // <-- Enable static export for `next export`
   env: {
     NEXT_PUBLIC_STACKS_NETWORK: process.env.NEXT_PUBLIC_STACKS_NETWORK,
     NEXT_PUBLIC_DEVNET_HOST: process.env.NEXT_PUBLIC_DEVNET_HOST,
