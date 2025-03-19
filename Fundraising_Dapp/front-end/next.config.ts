@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/buy',
   env: {
     NEXT_PUBLIC_STACKS_NETWORK: process.env.NEXT_PUBLIC_STACKS_NETWORK,
     NEXT_PUBLIC_DEVNET_HOST: process.env.NEXT_PUBLIC_DEVNET_HOST,
@@ -8,7 +9,7 @@ const nextConfig = {
     NEXT_PUBLIC_CONTRACT_DEPLOYER_MAINNET_ADDRESS: process.env.NEXT_PUBLIC_CONTRACT_DEPLOYER_MAINNET_ADDRESS,
   },
   eslint: {
-    ignoreDuringBuilds: true, // Ignore ESLint during the build process
+    ignoreDuringBuilds: true,
   }
 };
 
