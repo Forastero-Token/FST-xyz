@@ -10,7 +10,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true, // Ignore ESLint during the build process
   },
-  distDir: 'build', // Specify custom build directory
 };
 
 export default nextConfig;
