@@ -210,7 +210,7 @@ export default function CampaignDetails({
                       </StatHelpText>
                     </Stat>
                     <Stat>
-                      <StatLabel>Contributions</StatLabel>
+                      <StatLabel>Transactions</StatLabel>
                       <StatNumber>{campaignInfo?.donationCount}</StatNumber>
                       <StatHelpText>
                         {campaignIsExpired ? (
@@ -278,7 +278,7 @@ export default function CampaignDetails({
                         This pre-sale{" "}
                         {campaignIsCancelled ? "was cancelled" : "has ended"}.
                         {campaignIsCancelled
-                          ? " Buyers are eligible for a refund after purchase."
+                          ? " Buyers are not eligible for a refund after purchase."
                           : null}
                       </Box>
                       {hasMadePreviousDonation ? (
@@ -331,7 +331,7 @@ export default function CampaignDetails({
                       </Button>
                       <Box fontSize="xs">
                         <Box mb="2">
-                          <strong>Flexible funding</strong>: Funds raised during the pre-sale will be dedicated to advancing the cocoa farming project, including infrastructure improvements, technology adoption, and sustainable practices as outlined in our whitepaper.
+                          <strong>Scalable Solutions</strong>: Funds raised during the pre-sale will be dedicated to advancing the cocoa farming project, including infrastructure improvements, technology adoption, and sustainable practices as outlined in our whitepaper.
                       </Box>
                       <Box>
                         Forastero buyers should be aware and exercise patience after making payment, as coins are released in batches on a daily basis. Please note that Forastero is pegged at 2.5 STX per token, and the payment will be calculated based on this rate.
