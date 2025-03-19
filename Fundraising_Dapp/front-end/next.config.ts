@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // <-- Enable static export for `next export`
   env: {
     NEXT_PUBLIC_STACKS_NETWORK: process.env.NEXT_PUBLIC_STACKS_NETWORK,
     NEXT_PUBLIC_DEVNET_HOST: process.env.NEXT_PUBLIC_DEVNET_HOST,
@@ -11,6 +10,5 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true, // Ignore ESLint during the build process
   },
-};
 
 export default nextConfig;
