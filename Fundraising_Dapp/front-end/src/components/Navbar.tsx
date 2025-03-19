@@ -33,7 +33,7 @@ export const Navbar = () => {
               width="40px"
               height="40px"
             />
-            <Link href="/" textDecoration="none">
+            <Link href="https://forastero.xyz/" textDecoration="none">
               <Box fontSize="lg" fontWeight="bold" color="gray.900" ml={4}>
                 FORASTERO
               </Box>
