@@ -23,7 +23,7 @@ jobs:
         working-directory: ./Fundraising_Dapp/front-end
 
       - name: Build Next.js project
-        run: npm run build
+        run: npm run build && npm run export
         working-directory: ./Fundraising_Dapp/front-end
 
       - name: Push to build-output branch
@@ -31,9 +31,27 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git checkout --orphan build-output
-          git rm -rf .
-          cp -r ./Fundraising_Dapp/front-end/.next/* ./
-          touch .nojekyll # Optional
+
+          # Clean only tracked files, exclude folders you want to protect if needed
+          git rm -rf .github .gitignore Fundraising_Dapp || true
+
+          # Temporary folder to hold build
+          mkdir -p temp-build
+
+          # Copy only the out directory contents
+          cp -r ./Fundraising_Dapp/front-end/out/* ./temp-build/
+
+          # Clean everything else
+          rm -rf *
+
+          # Move build files to root
+          mv temp-build/* ./
+          rm -rf temp-build
+
+          # For GitHub Pages to ignore Jekyll processing
+          touch .nojekyll
+
+          # Commit & push to build-output branch
           git add .
           git commit -m "Automated deploy to build-output"
           git push --force origin build-output
