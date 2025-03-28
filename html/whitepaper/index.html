@@ -9,7 +9,38 @@
         canvas {
             image-rendering: pixelated;
         }
-    </style>
+  
+    .blink-link {
+        animation: blink 1s infinite;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    @keyframes blink {
+        0% { color: red; }
+        50% { color: green; }
+        100% { color: red; }
+    }
+      .blinking-arrow {
+        animation: blinkColor 1s infinite;
+    }
+
+    @keyframes blinkColor {
+        0% { fill: red; }
+        50% { fill: green; }
+        100% { fill: red; }
+    }
+     .blinking-text {
+        animation: blinkText 1s infinite;
+        text-decoration: none;
+    }
+
+    @keyframes blinkText {
+        0% { color: red; }
+        50% { color: green; }
+        100% { color: red; }
+    }
+</style>
 </head>
 <body class="max-w-[1280px] mx-auto w-full">
     <header class="header flex justify-between items-center p-5 sticky top-0 bg-black lg:block lg:justify-normal z-10">
@@ -142,10 +173,9 @@ FST is a SIP-010 standard token designed for exchange-based utility and ecosyste
 Blockchain technology ensures that Forastero Token remains immutable, secure, and decentralized.</li> <br>
 </ul>
 <br>
-<h2 class="typography-title-xl-mobile lg:typography-title-xl pb-[18px] lg:pb-[52px]">Token Supply & Distribution</h2>
+<h2 class="typography-title-xl-mobile lg:typography-title-xl pb-[18px] lg:pb-[52px]">Token Supply & Allocation</h2>
                 <br class="hidden lg:block">
                 <br>
-
                 <div class="grid lg:grid-cols-2 gap-4">
                     <a href="https://explorer.hiro.so/token/SPKMJZT5DVAVE2Q4ERW6XCPN9RZXXS327CKT51AP.forastero-token?chain=mainnet" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
                         <p class="text-[20px] leading-[26px] lg:text-[32px] lg:leading-[40px]"><strong>Max Total Supply:</strong> </p>
@@ -153,9 +183,10 @@ Blockchain technology ensures that Forastero Token remains immutable, secure, an
                         <p class="flex flex-row justify-between items-center text-white text-[20px] lg:text-[24px]">
                             ~ 10,000,000 FST
 
-                            <svg class="fill-white/30 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"></path>
-                            </svg>
+                            
+<svg class="blinking-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"/>
+</svg>
                         </p>
                     </a>
                     <a href="https://explorer.hiro.so/token/SPKMJZT5DVAVE2Q4ERW6XCPN9RZXXS327CKT51AP.forastero-token?chain=mainnet" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
@@ -164,23 +195,27 @@ Blockchain technology ensures that Forastero Token remains immutable, secure, an
                         <p class="flex flex-row justify-between items-center text-white text-[20px] lg:text-[24px]">
                             ~ Stacks (SIP-010 Token)
 
-                            <svg class="fill-white/30 group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"></path>
-                            </svg>
+<svg class="blinking-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"/>
+</svg>
                         </p>
                     </a>
-     <a href="" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
+     <a href="https://explorer.stacks.co/address/SP2GW7SDRDTNBBJEBWBDE64RYMV84TFYMH9QZ1GK9" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
                         <p class="text-[20px] leading-[26px] lg:text-[32px] lg:leading-[40px]"><strong>Public Sale:</strong>
                         <br>
                         40% </p>
 
                         <p class="flex flex-row justify-between items-center text-white text-[20px] lg:text-[24px]">
                             ~ 4,000,000 FST
+                             
+<svg class="blinking-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"/>
+</svg>
                         </p>
                     </a>
                     
                     
-                    <a href="" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
+                    <a href="https://explorer.stacks.co/address/SPCX6Z4B292MY7WNGK9GSYDKQXS3FEWTTZAC74G4" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
                         <p class="text-[20px] leading-[26px] lg:text-[32px] lg:leading-[40px]"><strong>Airdrop: </strong>
                         <br>
                         5%
@@ -188,21 +223,29 @@ Blockchain technology ensures that Forastero Token remains immutable, secure, an
 
                         <p class="flex flex-row justify-between items-center text-white text-[20px] lg:text-[24px]">
                             ~ 500,000 FST
+                             
+<svg class="blinking-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"/>
+</svg>
                         </p>
                     </a>
                     
-                    <a href="" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
+                    <a href="https://explorer.stacks.co/address/SP3VMA9W5GP8VYGXQVC1X1ZD42G1F605E2HD5MSF0" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
                         <p class="text-[20px] leading-[26px] lg:text-[32px] lg:leading-[40px]"><strong>Team & Founders:</strong>
                         <br>
                     10% </p>
 
                         <p class="flex flex-row justify-between items-center text-white text-[20px] lg:text-[24px]">
                             ~ 1,000,000 FST
+                             
+<svg class="blinking-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"/>
+</svg>
                         </p>
                     </a>
                     
                     
-                    <a href="" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
+                    <a href="https://explorer.stacks.co/address/SP29XP5S209QKYZ7PCENJ1SAAPF3KE1PSP9JB657G" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
                         <p class="text-[20px] leading-[26px] lg:text-[32px] lg:leading-[40px]"><strong>Ecosystem & Growth: </strong>
                         <br>
                         20%
@@ -210,21 +253,29 @@ Blockchain technology ensures that Forastero Token remains immutable, secure, an
 
                         <p class="flex flex-row justify-between items-center text-white text-[20px] lg:text-[24px]">
                             ~ 2,000,000 FST
+                            
+<svg class="blinking-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"/>
+</svg>
                         </p>
                     </a>
                 
-                  <a href="" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
+                  <a href="https://explorer.stacks.co/address/SP6W5B4YXXJNZ86MSGYGY8JDYDZA6BWW9YRVJXF6" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
                         <p class="text-[20px] leading-[26px] lg:text-[32px] lg:leading-[40px]"><strong>Marketing & Partnerships:</strong>
                         <br>
                     15% </p>
 
                         <p class="flex flex-row justify-between items-center text-white text-[20px] lg:text-[24px]">
                             ~ 1,500,000 FST
+                           
+<svg class="blinking-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"/>
+</svg>
                         </p>
                     </a>
                     
                     
-                    <a href="" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
+                    <a href="https://explorer.stacks.co/address/SPHCVS2J73H3W16AKAE81F3G29HXAQQWBW8BGJW2" target="_blank" class="bg-black-transparent group min-h-[152px] lg:min-h-[200px] flex flex-col justify-between p-6 rounded-[20px] border-solid border border-white/15 hover:bg-black-transparent-hover">
                         <p class="text-[20px] leading-[26px] lg:text-[32px] lg:leading-[40px]"><strong>Liquidity & Exchange: </strong>
                         <br>
                         10%
@@ -232,13 +283,68 @@ Blockchain technology ensures that Forastero Token remains immutable, secure, an
 
                         <p class="flex flex-row justify-between items-center text-white text-[20px] lg:text-[24px]">
                             ~ 1,000,000 FST
+                            
+<svg class="blinking-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="23" viewBox="0 0 22 23" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.10594 3.41932C3.10594 2.49253 3.84373 1.74121 4.75388 1.74121H18.7368C18.7365 1.74121 18.737 1.74121 18.7368 1.74121H18.7614C19.6715 1.74121 20.4093 2.49253 20.4093 3.41932V17.6832C20.4093 18.61 19.6715 19.3613 18.7614 19.3613C17.8512 19.3613 17.1134 18.61 17.1134 17.6832V7.44594L3.5886 21.2183C2.94505 21.8738 1.90162 21.8738 1.25807 21.2183C0.614498 20.563 0.614498 19.5004 1.25807 18.8451L14.7587 5.09743H4.75388C3.84373 5.09743 3.10594 4.34612 3.10594 3.41932Z"/>
+</svg>
                         </p>
                     </a>
-   
-                    
-    
                 </div>
-            </section>
+                <br>
+                <br>
+<h2 class="typography-title-xl-mobile lg:typography-title-xl pb-[18px] lg:pb-[52px]">Transparency</h2>                
+  <section id="tokenomics" style="font-family: Arial, sans-serif; padding: 20px;">
+    <p>
+        To maintain trust and transparency with our community and partners, Forastero has allocated tokens according to the following distribution model. The allocated tokens have been distributed into dedicated wallets, which are listed below. These wallets and their activities can be verified on-chain at any time.
+    </p>
+    <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+        <thead style="background-color: #28a745; color: #fff;">
+            <tr>
+                <th>Category</th>
+                <th>Allocation</th>
+                <th>Wallet Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Public Sale</td>
+                <td>4,000,000 Tokens</td>
+                <td><a class="blink-link" href="https://explorer.stacks.co/address/SP2GW7SDRDTNBBJEBWBDE64RYMV84TFYMH9QZ1GK9" target="_blank">SP2GW7SDRDTNBBJEBWBDE64RYMV84TFYMH9QZ1GK9</a></td>
+            </tr>
+            <tr>
+                <td>Airdrop</td>
+                <td>500,000 Tokens</td>
+                <td><a class="blink-link" href="https://explorer.stacks.co/address/SPCX6Z4B292MY7WNGK9GSYDKQXS3FEWTTZAC74G4" target="_blank">SPCX6Z4B292MY7WNGK9GSYDKQXS3FEWTTZAC74G4</a></td>
+            </tr>
+            <tr>
+                <td>Team & Founders</td>
+                <td>1,000,000 Tokens</td>
+                <td><a class="blink-link" href="https://explorer.stacks.co/address/SP3VMA9W5GP8VYGXQVC1X1ZD42G1F605E2HD5MSF0" target="_blank">SP3VMA9W5GP8VYGXQVC1X1ZD42G1F605E2HD5MSF0</a></td>
+            </tr>
+            <tr>
+                <td>Ecosystem & Growth</td>
+                <td>2,000,000 Tokens</td>
+                <td><a class="blink-link" href="https://explorer.stacks.co/address/SP29XP5S209QKYZ7PCENJ1SAAPF3KE1PSP9JB657G" target="_blank">SP29XP5S209QKYZ7PCENJ1SAAPF3KE1PSP9JB657G</a></td>
+            </tr>
+            <tr>
+                <td>Marketing & Partnerships</td>
+                <td>1,500,000 Tokens</td>
+                <td><a class="blink-link" href="https://explorer.stacks.co/address/SP6W5B4YXXJNZ86MSGYGY8JDYDZA6BWW9YRVJXF6" target="_blank">SP6W5B4YXXJNZ86MSGYGY8JDYDZA6BWW9YRVJXF6</a></td>
+            </tr>
+            <tr>
+                <td>Liquidity & Exchange</td>
+                <td>1,000,000 Tokens</td>
+                <td><a class="blink-link" href="https://explorer.stacks.co/address/SPHCVS2J73H3W16AKAE81F3G29HXAQQWBW8BGJW2" target="_blank">SPHCVS2J73H3W16AKAE81F3G29HXAQQWBW8BGJW2</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="margin-top: 20px;">
+        All wallets have been funded based on the above structure. Each allocation will serve its intended function including liquidity provisioning, ecosystem development, marketing initiatives, airdrops, and team incentives. This structure will allow all stakeholders to monitor token flows transparently.
+    </p>
+</section>
+</section>
+            
+        
 
             <section class="pb-[124px] js-study-section" id="watch">
                <h2 class="typography-title-xl-mobile lg:typography-title-xl pb-[18px] lg:pb-[52px]">Forastero Ecosystem</h2>
@@ -366,7 +472,11 @@ Blockchain technology ensures that Forastero Token remains immutable, secure, an
     <div class="bg-green-600 p-6 rounded-lg shadow-lg">
         <h3 class="text-xl font-bold text-white">✅ Farm Management & Location</h3>
         <p class="text-white">
-            The Forastero acquired farmland is located a few kilometers away from formerly proposed <strong><a href="https://en.wikipedia.org/wiki/Edumanom_Forest_Reserve" target="_blank">Edumanom National Forest Reserve</a></strong>
+            The Forastero acquired farmland is located a few kilometers away from formerly proposed <strong>
+    <a class="blinking-text" href="https://en.wikipedia.org/wiki/Edumanom_Forest_Reserve" target="_blank">
+        Edumanom National Forest Reserve
+    </a>
+</strong>
 , 
             situated between Ogbia and Nembe local governments in <strong>Bayelsa State, South-South Nigeria, West Africa</strong>. 
             The land has fertile soil ideal for cocoa cultivation, with plans to expand into the <strong>Edumanom Forest Reserve</strong>, 
